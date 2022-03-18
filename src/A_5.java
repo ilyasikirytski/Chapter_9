@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.Collections;
+import java.util.regex.Pattern;
 
 /*
 5. Найти в строке наибольшее число цифр, идущих подряд
@@ -12,15 +12,13 @@ public class A_5 {
         try {
             bf = new BufferedReader(new FileReader(new File("C:\\Users\\Admin\\Desktop\\", "Chapter_8_input.txt")));
             pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("C:\\Users\\Admin\\Desktop\\", "Chapter_8_output.txt"))));
-            String tmp = "";
+            String tmp;
             while ((tmp = bf.readLine()) != null) {
                 s = tmp.split(" ");
-                int mostBigCountOfNumber = 0;
+                String mostBigCountOfNumber;
                 for (int i = 1; i < s.length; i++) {
-                    if (s[i].matches("[^0-9]{1,}")) {
-                        char[] num = {'1','2','3','4','5','6','7','8','9','0'};
-                        System.out.println(s[i]);
-                    }
+                    mostBigCountOfNumber = Pattern.compile("[^0-9]+").matcher(s[i]).replaceAll("");
+                    System.out.println(mostBigCountOfNumber.length());
                 }
             }
 
