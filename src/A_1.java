@@ -4,22 +4,31 @@
 1. В каждой строке найти и удалить заданную подстроку.
  */
 
+/*
+использовать относительный путь
+ */
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class A_1 {
     public static void main(String[] args) {
-        String[] s;
+        String regexSubStringToDelete = "о";
+        String replacementString = "";
         BufferedReader bf = null;
         PrintWriter pw = null;
         try {
-            bf = new BufferedReader(new FileReader(new File("C:\\Users\\Admin\\Desktop\\", "Chapter_8_input.txt")));
-            pw = new PrintWriter(new BufferedWriter(new FileWriter(new File("C:\\Users\\Admin\\Desktop\\", "Chapter_8_output.txt"))));
-            String tmp = "";
-            while ((tmp = bf.readLine()) != null) {
-                s = tmp.split(" ");
-                for (String res : s) {
-                    System.out.println(res.replaceAll("о", ""));
-                    pw.printf("%s%n", res.replaceAll("о", ""));
+            Path file = Paths.get(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_input.txt");
+            bf = new BufferedReader(new FileReader(String.valueOf(file)));
+            pw = new PrintWriter(new BufferedWriter(new FileWriter(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_output.txt")));
+            String tmp;
+            if (Files.exists(file)) {
+                while ((tmp = bf.readLine()) != null) {
+                    tmp = tmp.replaceAll(regexSubStringToDelete, replacementString);
+                    System.out.println(tmp);
+                    pw.printf(tmp);
                 }
             }
         } catch (IOException e) {
