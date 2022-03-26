@@ -6,19 +6,21 @@ import java.io.File
  */
 
 fun main() {
-    val s: MutableList<String> = mutableListOf()
+    val repeatingWords: HashMap<String, Int> = HashMap()
+    val words: ArrayList<String> = ArrayList<String>()
     val str: String
-
-    val file = File("C:\\Users\\Admin\\Desktop\\", "Chapter_8_input.txt")
+    val file = File(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_input.txt")
     str = file.readText()
-    s.addAll((str.split(" ".toRegex())))
-    var count = 0
-    for (i in 0 until s.size - 1) {
-        for (j in i + 1 until s.size) {
-            if (s[i] == s[j] && i != j) {
-                count += 1
-                println("${s[j]} повторяется $count раз")
-            }
+    words.addAll(str.split("\\s+".toRegex()))
+    for (word in words) {
+        if (!repeatingWords.containsKey(word)) {
+            repeatingWords[word] = 0
         }
+        repeatingWords[word] = repeatingWords[word]!! + 1
+    }
+
+    val result = repeatingWords.toList().sortedBy { (_, value) -> value }.toMap()
+    for (s in result) {
+        println("${s.key} - ${s.value}")
     }
 }
