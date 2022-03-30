@@ -12,22 +12,29 @@ import java.util.Locale;
 /*
 сделать обычный for (сделать указатель на СЛЕДУЮЩЕЕ слово). не допустить Возможную "ошибку"
  */
+/*
+считать ВЕСЬ ТЕКС, а не одну строчку. и потом уже сравнивать слова.
+ */
 public class A_4 {
     public static void main(String[] args) {
-        String[] s;
+        String[] word;
         BufferedReader bf = null;
         PrintWriter pw = null;
         try {
             Path file = Paths.get(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_input.txt");
             bf = new BufferedReader(new FileReader(String.valueOf(file)));
             pw = new PrintWriter(new BufferedWriter(new FileWriter(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_output.txt")));
-            String tmp;
+            String line;
             if (Files.exists(file)) {
-                while ((tmp = bf.readLine()) != null) {
-                    s = tmp.split(" ");
-                    for (int i = 0; i < s.length - 1; i++) {
-                        if (s[i].toLowerCase(Locale.ROOT).charAt(s[i].length() - 1) == s[i + 1].toLowerCase(Locale.ROOT).charAt(0)) {
-                            System.out.println(s[i] + " - " + s[i + 1]);
+                while ((line = bf.readLine()) != null) {
+                    word = line.split(" ");
+                    for (int i = 0; i < word.length - 1; i++) {
+                        // вынести указатели слов в отдельные переменные в цикле
+                        // и сразу перевести word в нижний регистр.
+                        String firstWord = word[i].toLowerCase(Locale.ROOT);
+                        String nextWord = word[i + 1].toLowerCase(Locale.ROOT);
+                        if (firstWord.charAt(word[i].length() - 1) == nextWord.charAt(0)) {
+                            System.out.println(word[i] + " - " + word[i + 1]);
                         }
                     }
                 }

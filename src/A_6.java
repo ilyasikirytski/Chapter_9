@@ -16,7 +16,6 @@ import java.util.*;
 public class A_6 {
     public static void main(String[] args) {
         String[] words;
-        Map<String, Integer> repeatingWords = new HashMap<>();
         BufferedReader bf = null;
         PrintWriter pw = null;
         try {
@@ -26,6 +25,7 @@ public class A_6 {
             String line;
             if (Files.exists(file)) {
                 while ((line = bf.readLine()) != null) {
+                    LinkedHashMap<String, Integer> repeatingWords = new LinkedHashMap<>();
                     words = line.split("\\s+");
                     for (String word : words) {
                         if (!repeatingWords.containsKey(word)) {
@@ -33,22 +33,21 @@ public class A_6 {
                         }
                         repeatingWords.put(word, repeatingWords.get(word) + 1);
                     }
+                    List<Map.Entry<String, Integer>> list = new ArrayList<>(repeatingWords.entrySet());
+                    list.sort(new Comparator<Map.Entry<String, Integer>>() {
+                        @Override
+                        public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                            return o1.getValue() - o2.getValue();
+                        }
+                    });
+                    for (Map.Entry<String, Integer> item : list) {
+                        String key = item.getKey();
+                        int value = item.getValue();
+                        System.out.print(key + " ");
+                    }
+                    System.out.println();
                 }
             }
-
-            List<Map.Entry<String, Integer>> list = new ArrayList<>(repeatingWords.entrySet());
-            list.sort(new Comparator<Map.Entry<String, Integer>>() {
-                @Override
-                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                    return o1.getValue() - o2.getValue();
-                }
-            });
-            for (Map.Entry<String, Integer> item : list) {
-                String key = item.getKey();
-                int value = item.getValue();
-                System.out.println(key + " " + value);
-            }
-
         } catch (
                 IOException e) {
             e.printStackTrace();

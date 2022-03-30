@@ -16,28 +16,25 @@ import java.util.regex.Pattern;
  */
 public class A_5 {
     public static void main(String[] args) {
-        String[] s;
         BufferedReader bf = null;
         PrintWriter pw = null;
         ArrayList<Integer> integersArrayList = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\d+");
         int result = 0;
         try {
             Path file = Paths.get(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_input.txt");
             bf = new BufferedReader(new FileReader(String.valueOf(file)));
             pw = new PrintWriter(new BufferedWriter(new FileWriter(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_output.txt")));
-            String tmp;
+            String line;
             if (Files.exists(file)) {
-                while ((tmp = bf.readLine()) != null) {
-                    s = tmp.split(" ");
-                    for (int i = 1; i < s.length; i++) {
-                        Pattern pattern = Pattern.compile("\\d+\\S?\\d*");
-                        Matcher matcher = pattern.matcher(s[i]);
-                        while (matcher.find()) {
-                            String value = s[i].substring(matcher.start(), matcher.end());
-                            integersArrayList.add(Integer.parseInt(value));
-                            if (result < Integer.parseInt(value)) {
-                                result = (Integer.parseInt(value));
-                            }
+                while ((line = bf.readLine()) != null) {
+                    Matcher matcher = pattern.matcher(line);
+                    while (matcher.find()) {
+                        String groupOfNumbers = matcher.group();
+                        int number = Integer.parseInt(groupOfNumbers);
+                        integersArrayList.add(number);
+                        if (result < number) {
+                            result = (number);
                         }
                     }
                 }

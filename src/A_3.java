@@ -17,21 +17,22 @@ import java.nio.file.Paths;
 public class A_3 {
 
     public static void main(String[] args) {
-        String[] s;
+        String[] words;
+        String regEx = "[ауоыиэяюёеАУОЫИЭЯЮЁЕ].*";
         BufferedReader bf = null;
         PrintWriter pw = null;
         try {
             Path file = Paths.get(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_input.txt");
             bf = new BufferedReader(new FileReader(String.valueOf(file)));
             pw = new PrintWriter(new BufferedWriter(new FileWriter(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_output.txt")));
-            String tmp;
+            String line;
             if (Files.exists(file)) {
-                while ((tmp = bf.readLine()) != null) {
-                    s = tmp.split(" ");
-                    for (String res : s) {
-                        if (res.matches("[ауоыиэяюёеАУОЫИЭЯЮЁЕ].*")) {
-                            System.out.println(res);
-                            pw.printf("%s%n", res);
+                while ((line = bf.readLine()) != null) {
+                    words = line.split(" ");
+                    for (String word : words) {
+                        if (word.matches(regEx)) {
+                            System.out.println(word);
+                            pw.printf("%s%n", word);
                         }
                     }
                 }

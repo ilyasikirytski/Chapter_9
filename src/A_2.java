@@ -25,12 +25,12 @@ public class A_2 {
             Path file = Paths.get(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_input.txt");
             bf = new BufferedReader(new FileReader(String.valueOf(file)));
             pw = new PrintWriter(new BufferedWriter(new FileWriter(System.getenv("USERPROFILE") + "\\Desktop\\Chapter_8_output.txt")));
-            String tmp;
+            String line;
             if (Files.exists(file)) {
-                while ((tmp = bf.readLine()) != null) {
-                    tmp = tmp.replaceAll(regexSubStringToDelete, replacementString);
-                    System.out.println(tmp);
-                    pw.printf("%s%n", tmp);
+                while ((line = bf.readLine()) != null) {
+                    line = line.replaceAll(regexSubStringToDelete, replacementString);
+                    System.out.println(line);
+                    pw.printf("%s%n", line);
                 }
             }
         } catch (IOException e) {
